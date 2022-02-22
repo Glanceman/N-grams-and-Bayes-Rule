@@ -24,7 +24,7 @@ public:
         string key = actions.substr(0, nVal);
         uniqueAct.insert(key.back());
         if (frequency.find(key) == frequency.end()) { //not exist 
-            frequency[key] = 0;
+            frequency[key] = 1;
         }
         else { // exist
             frequency[key] = frequency[key] + 1;
@@ -57,36 +57,37 @@ void main()
 {
     vector<string> text;
     readFile("../string.txt", text);
-    /* test
-    NGramPredictor predictor(3);
-    string str = "LRRLRLLLLRRLRLRR";
+    /*
+    NGramPredictor predictor(2);
+    string str = "LRRLRLLLRRLRLRR";
     for (int i = str.length(); i > 2; i--) {
         string action = str.substr(i - 3, 3);
         predictor.registerSequence(action);
     }
     cout << predictor.getMostLikely("RR") << endl;
     */
-    NGramPredictor predictor1(1);
+
+    NGramPredictor predictor1(0);
     for (int i = text[0].length(); i > 0; i--) {
         string action = text[0].substr(i - 1, 1);
         predictor1.registerSequence(action);
     }
 
 
-    NGramPredictor predictor2(2);
-    for (int i = text[0].length(); i > 1; i--) {
-        string action = text[0].substr(i - 2, 2);
-        predictor2.registerSequence(action);
-    }
-    cout << predictor2.getMostLikely(text[0].substr(text[0].length() - 1)) << endl;
-
-
-    NGramPredictor predictor3(3);
+    NGramPredictor predictor2(2);//AC BDE
     for (int i = text[0].length(); i > 2; i--) {
         string action = text[0].substr(i - 3, 3);
+        predictor2.registerSequence(action);
+    }
+    cout << predictor2.getMostLikely(text[0].substr(text[0].length() - 2,2)) << endl;
+
+
+    NGramPredictor predictor3(3);//A BCDE
+    for (int i = text[0].length(); i > 3; i--) {
+        string action = text[0].substr(i - 4, 4);
         predictor3.registerSequence(action);
     }
-    cout << predictor3.getMostLikely(text[0].substr(text[0].length()-2)) << endl;
+    cout << predictor3.getMostLikely(text[0].substr(text[0].length()-3,3)) << endl;
 }
 
 void readFile(string path, vector<string>& text) {
