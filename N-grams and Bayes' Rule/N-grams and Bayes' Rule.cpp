@@ -5,8 +5,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include<unordered_map>
-#include<unordered_set>
+#include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 void readFile(string path, vector<string>& text);
@@ -67,27 +67,34 @@ void main()
     cout << predictor.getMostLikely("RR") << endl;
     */
 
-    NGramPredictor predictor1(0);
+    NGramPredictor predictor1(1-1);
     for (int i = text[0].length(); i > 0; i--) {
         string action = text[0].substr(i - 1, 1);
         predictor1.registerSequence(action);
     }
 
 
-    NGramPredictor predictor2(2);//AC BDE
-    for (int i = text[0].length(); i > 2; i--) {
-        string action = text[0].substr(i - 3, 3);
+    NGramPredictor predictor2(2-1);
+    for (int i = text[0].length(); i > 1; i--) {
+        string action = text[0].substr(i - 2, 2);
         predictor2.registerSequence(action);
     }
-    cout << predictor2.getMostLikely(text[0].substr(text[0].length() - 2,2)) << endl;
+    cout << predictor2.getMostLikely(text[0].substr(text[0].length() - 1, 1)) << endl;
 
-
-    NGramPredictor predictor3(3);//A BCDE
-    for (int i = text[0].length(); i > 3; i--) {
-        string action = text[0].substr(i - 4, 4);
+    NGramPredictor predictor3(3-1);//AC BDE trigram
+    for (int i = text[0].length(); i > 2; i--) {
+        string action = text[0].substr(i - 3, 3);
         predictor3.registerSequence(action);
     }
-    cout << predictor3.getMostLikely(text[0].substr(text[0].length()-3,3)) << endl;
+    cout << predictor3.getMostLikely(text[0].substr(text[0].length() - 2,2)) << endl;
+
+
+    NGramPredictor predictor4(3);//A BCDE
+    for (int i = text[0].length(); i > 3; i--) {
+        string action = text[0].substr(i - 4, 4);
+        predictor4.registerSequence(action);
+    }
+    cout << predictor4.getMostLikely(text[0].substr(text[0].length()-3,3)) << endl;
 }
 
 void readFile(string path, vector<string>& text) {
